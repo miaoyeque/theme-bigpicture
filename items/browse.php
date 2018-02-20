@@ -43,8 +43,18 @@ echo head(array('title'=>$pageTitle,'bodyclass' => 'items browse'));
             <?php echo link_to_item(item_image('fullsize')); ?>
         </div>
         <?php endif; ?>
+        <?php
 
-        <h3><?php echo link_to_item(metadata('item', array('Dublin Core', 'Title')), array('class'=>'permalink')); ?></h3>
+        if(isset($_SERVER['QUERY_STRING']) && !empty($_SERVER['QUERY_STRING']))
+		{
+		$searchlink = record_url('item').'?' . $_SERVER['QUERY_STRING'];
+		echo '<h2><a href="'.$searchlink.'">'. metadata('item', array('Dublin Core','Title')).'</a></h2>';
+		}
+		else
+		{
+    	echo '<h2>'.link_to_item(metadata('item', array('Dublin Core','Title')), array('class'=>'permalink')).'</h2>';
+		}
+		?>
 
         <?php if ($creator = metadata('item', array('Dublin Core', 'Creator'))): ?>
         <span class="creator"><?php echo $creator; ?></span>
